@@ -1,13 +1,5 @@
 ### Eco-regions into the future
 
-if (any(.packages(all.available=TRUE)=='ComGenR')==FALSE){
-    if (any(.packages(all.available=TRUE)=='devtools')==FALSE){
-        install.packages('devtools')
-    }
-    install_github(repo='CommunityGeneticsAnalyses/ComGenR')
-}
-
-library(ComGenR)
 library(vegan)
 library(ecodist)
 source('global.R')
