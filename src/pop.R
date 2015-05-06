@@ -1,5 +1,4 @@
 ### Eco-regions into the future
-
 library(vegan)
 library(ecodist)
 source('global.R')
@@ -60,6 +59,7 @@ clim.mat <- data.frame(time=time,do.call(rbind,clim.v))
 ### Here is an example using the simulated data above:
 ####################################
 clim.v <- split(clim.mat[,-1],clim.mat$time)
+
 
 ######################################################
 ### Here's the plotting script, sorry, it's obtuse.

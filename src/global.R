@@ -1,6 +1,14 @@
 library(RCurl)
 library(XML)
 
+alpha <- function(col, alpha=1){
+    if(missing(col))
+        stop("Please provide a vector of colours.")
+    apply(sapply(col, col2rgb)/255, 2,
+          function(x)
+              rgb(x[1], x[2], x[3], alpha=alpha))
+}
+
 getElev <- function(latitude=52.4822,longitude=-1.8946){
     url <- paste(
         "http://www.earthtools.org/height",
@@ -12,6 +20,16 @@ getElev <- function(latitude=52.4822,longitude=-1.8946){
     ans <- xmlTreeParse(page, useInternalNodes = TRUE)
     heightNode <- xpathApply(ans, "//meters")[[1]]
     as.numeric(xmlValue(heightNode))
+}
+
+ch.point <- function(x,f){
+    list(mu=tapply(x,f,mean),se=tapply(x,f,function(x) sd(x)/sqrt(length(x))))
+}
+
+ch.vector <- function(x,t,pch,col){
+    mu <- apply(x,2,function(x,t) tapply(x,t,mean),t=t)
+    se <- apply(x,2,function(x,t) tapply(x,t,function(x) sd(x)/sqrt(length(x))),t=t)
+    cbind(mu,se)
 }
 
 ch.plot <-
