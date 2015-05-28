@@ -42,6 +42,6 @@ f <- paste(move.all[,1],move.all[,4])
 
 pdf('../results/EcoReg_FigB.pdf')
 chPlot(move.all[,2:3],f=f,col=move.alpha,pch=move.pch,xlim=c(-1.5,2),ylim=c(-2,1))
-plot(vec.move,col=grey(0.3))
+plot(vec.move,col=grey(0.75))
 dev.off()
 gitPush('../results')
