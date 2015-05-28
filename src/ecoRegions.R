@@ -30,15 +30,15 @@ dev.off()
 move.all <- read.csv('../data/AllLocations_EnvMove.csv')
 move.all[,2:3] <- apply(move.all[,2:3],2,function(x) (x-mean(x))/sd(x))
 vec.move <- envfit(move.all[,2:3],move.all[,5:7])
-
 move.col <- c('blue','green','red')[as.numeric(move.all$Ecoregion)]
 move.time <- as.numeric(factor(move.all$Time))
 move.time <- c(1,0.45,0.5)[move.time]
 move.alpha <- apply(cbind(move.col,move.time),1,function(x) alpha(x[1],x[2]))
 move.pch <- as.numeric(factor(move.all$Time))
 move.pch <- c(19,19,1)[move.pch]
+f <- paste(move.all[,1],move.all[,4])
 
 pdf('../results/EcoReg_FigB.pdf')
-plot(move.all[,2:3],col=move.alpha,pch=move.pch)
+chPlot(move.all[,2:3],f=f,col=move.alpha,pch=move.pch)
 plot(vec.move,col=grey(0.3))
 dev.off()

@@ -29,10 +29,6 @@ getElev <- function(latitude=52.4822,longitude=-1.8946){
     as.numeric(xmlValue(heightNode))
 }
 
-col <- move.alpha
-pch <- move.pch
-x <- move.all[,2:3]
-f <- paste(move.all[,1],move.all[,4])
 chPlot <- function(x,f,col,pch,se=FALSE,xlim=c(-1,1),ylim=c(-1,1)){
     col <- tapply(col,f,function(x) x[1])
     pch <- tapply(pch,f,function(x) x[1])
@@ -47,14 +43,11 @@ chPlot <- function(x,f,col,pch,se=FALSE,xlim=c(-1,1),ylim=c(-1,1)){
     bar.up <- mu + bars
     bar.lo <- mu - bars
 ### make the plot
-    pdf('../results/test.pdf') 
     plot(mu,col=col,pch=pch)
     for (i in 1:nrow(mu)){
         lines(c(bar.up[i,1],bar.lo[i,1]),rep(mu[i,2],2),col=col[i])
         lines(rep(mu[i,1],2),c(bar.up[i,2],bar.lo[i,2]),col=col[i])
     }
-    dev.off()
-    gitPush()
 }
 
 ch.point <- function(x,f){
