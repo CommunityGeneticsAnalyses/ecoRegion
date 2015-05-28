@@ -53,7 +53,7 @@ chPlot <- function(x,f,col,pch,se=FALSE,xlim=c(-1,1),ylim=c(-1,1)){
         lines(c(bar.up[i,1],bar.lo[i,1]),rep(mu[i,2],2),col=col[i])
     }
     for (i in 1:nrow(mu)){
-        lines(rep(mu[i,2],1),c(bar.up[i,2],bar.lo[i,2]),col=col[i])
+        lines(rep(mu[i,1],1),c(bar.up[i,2],bar.lo[i,2]),col=col[i])
     }
     dev.off()
     gitPush()
