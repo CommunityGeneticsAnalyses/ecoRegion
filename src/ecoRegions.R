@@ -13,7 +13,7 @@ stay[,5:7] <- apply(stay[,5:7],2,function(x) x/max(x))
 ### ord.stay <- nmds(dist(stay[,5:7]),2,2)
 ### min.stay <- nmds.min(ord.stay)
 min.stay <- read.csv('../data/ord_stay.csv')
-vec.stay <- envfit(min.stay,stay)
+vec.stay <- envfit(min.stay,stay[,-1:-4])
 ord.col <- c('blue','green','red')[as.numeric(stay$Ecoregion)]
 ord.time <- as.numeric(factor(stay$Time))
 ord.time <- c(1,0.45,0.5)[ord.time]
