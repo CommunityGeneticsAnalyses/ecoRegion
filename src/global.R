@@ -29,8 +29,7 @@ getElev <- function(latitude=52.4822,longitude=-1.8946){
     as.numeric(xmlValue(heightNode))
 }
 
-col <- move.col
-alpha <- move.alpha
+col <- move.alpha
 pch <- move.pch
 x <- move.all[,2:3]
 f <- paste(move.all[,1],move.all[,4])
