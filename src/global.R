@@ -29,6 +29,29 @@ getElev <- function(latitude=52.4822,longitude=-1.8946){
     as.numeric(xmlValue(heightNode))
 }
 
+col <- move.col
+alpha <- move.alpha
+pch <- move.pch
+x <- move.all[,2:3]
+f <- paste(move.all[,1],move.all[,4])
+chPlot <- function(x,f,col,pch,se=TRUE,xlim=c(-1,1),ylim=c(-1,1)){
+    col <- tapply(col,f,function(x) x[1])
+    pch <- tapply(pch,f,function(x) x[1])
+    mu <- apply(x,2,function(x,f) tapply(x,f,mean),f=f)
+    if (se){
+        bars <- apply(x,2,function(x,f) 
+            tapply(x,f,function(x) sd(x)/sqrt(length(x))),f=f)
+    }else{
+        bars <- apply(x,2,function(x,f) 
+            tapply(x,f,sd),f=f)
+    }
+    bar.up <- mu + bars
+    bar.lo <- mu - bars
+### make the plot
+    plot(mu,col=col,pch=pch)
+    
+}
+
 ch.point <- function(x,f){
     list(mu=tapply(x,f,mean),se=tapply(x,f,function(x) sd(x)/sqrt(length(x))))
 }
