@@ -24,7 +24,7 @@ f.stay <- paste(stay[,1],stay[,4])
 
 pdf('../results/EcoReg_FigA.pdf')
 chPlot(min.stay,f=f.stay,col=ord.alpha,pch=ord.pch)
-plot(vec.stay,col=grey(0.3),xlim=c(-1,2),ylim=c(-0.5,0.5))
+plot(vec.stay,col=grey(0.3),xlim=c(-1,2.5),ylim=c(-0.5,0.5))
 dev.off()
 gitPush('../results')
 
