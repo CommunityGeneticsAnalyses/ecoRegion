@@ -33,7 +33,7 @@ col <- move.alpha
 pch <- move.pch
 x <- move.all[,2:3]
 f <- paste(move.all[,1],move.all[,4])
-chPlot <- function(x,f,col,pch,se=TRUE,xlim=c(-1,1),ylim=c(-1,1)){
+chPlot <- function(x,f,col,pch,se=FALSE,xlim=c(-1,1),ylim=c(-1,1)){
     col <- tapply(col,f,function(x) x[1])
     pch <- tapply(pch,f,function(x) x[1])
     mu <- apply(x,2,function(x,f) tapply(x,f,mean),f=f)
