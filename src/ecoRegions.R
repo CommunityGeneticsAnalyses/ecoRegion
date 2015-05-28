@@ -20,11 +20,13 @@ ord.time <- c(1,0.45,0.5)[ord.time]
 ord.alpha <- apply(cbind(ord.col,ord.time),1,function(x) alpha(x[1],x[2]))
 ord.pch <- as.numeric(factor(stay$Time))
 ord.pch <- c(19,19,1)[ord.pch]
+f.stay <- paste(stay[,1],stay[,4])
 
 pdf('../results/EcoReg_FigA.pdf')
-plot(min.stay,col=ord.alpha,pch=ord.pch)
+chPlot(min.stay,f=f.stay,col=ord.alpha,pch=ord.pch)
 plot(vec.stay,col=grey(0.3))
 dev.off()
+gitPush('../results')
 
 ### Fig 2. Plot of points moving through geographic space based on climate
 move.all <- read.csv('../data/AllLocations_EnvMove.csv')
@@ -42,3 +44,4 @@ pdf('../results/EcoReg_FigB.pdf')
 chPlot(move.all[,2:3],f=f,col=move.alpha,pch=move.pch)
 plot(vec.move,col=grey(0.3))
 dev.off()
+gitPush('../results')
