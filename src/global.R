@@ -1,5 +1,12 @@
 library(RCurl)
 library(XML)
+library(vegan)
+
+gitPush <- function(x='.',message='update'){
+    system(paste('git add -A ',x,sep=''))
+    system(paste('git commit -am ',message,sep=''))
+    system('git push')
+}
 
 alpha <- function(col, alpha=1){
     if(missing(col))
