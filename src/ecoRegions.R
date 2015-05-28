@@ -21,10 +21,14 @@ ord.alpha <- apply(cbind(ord.col,ord.time),1,function(x) alpha(x[1],x[2]))
 ord.pch <- as.numeric(factor(stay$Time))
 ord.pch <- c(19,19,1)[ord.pch]
 f.stay <- paste(stay[,1],stay[,4])
+leg.names <- unique(paste(stay[,1],stay[,4]))
+leg.names <- leg.names[c(3,1,2,6,4,5,9,7,8)]
+leg.col <- unique(ord.alpha)[c(3,1,2,6,4,5,9,7,8)]
 
 pdf('../results/EcoReg_FigA.pdf')
 chPlot(min.stay,f=f.stay,col=ord.alpha,pch=ord.pch,xlim=c(-1,1.25),ylim=c(-1,0.5))
 plot(vec.stay,col=grey(0.75))
+legend('bottomright',legend=leg.names,pch=rep(c(19,19,1),3),col=leg.col)
 dev.off()
 gitPush('../results')
 
@@ -43,5 +47,6 @@ f <- paste(move.all[,1],move.all[,4])
 pdf('../results/EcoReg_FigB.pdf')
 chPlot(move.all[,2:3],f=f,col=move.alpha,pch=move.pch,xlim=c(-1.5,2),ylim=c(-2,1))
 plot(vec.move,col=grey(0.75))
+legend('bottomright',legend=leg.names,pch=rep(c(19,19,1),3),col=leg.col)
 dev.off()
 gitPush('../results')
