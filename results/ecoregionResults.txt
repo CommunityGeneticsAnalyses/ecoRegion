@@ -1,0 +1,24 @@
+### Fig 1. Ordination of ecoregions moving through climate space
+ordination
+Minimum stress for given dimensionality:  0.01978888 
+r^2 for minimum stress configuration:  0.9988584 
+vectors
+             X1       X2     r2 Pr(>r)    
+BIO.11 -0.94473  0.32784 0.9578  0.001 ***
+BIO.15 -0.09822 -0.99517 0.9948  0.001 ***
+BIO.6  -0.99985 -0.01743 0.9969  0.001 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Permutation: free
+Number of permutations: 999
+
+### Fig 2. Plot of points moving through geographic space based on climate
+       Longitude Latitude     r2 Pr(>r)    
+BIO.11  -0.31732 -0.94832 0.8394  0.001 ***
+BIO.15  -0.53575 -0.84438 0.6968  0.001 ***
+BIO.6   -0.40092 -0.91611 0.7706  0.001 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Permutation: free
+Number of permutations: 999
+
