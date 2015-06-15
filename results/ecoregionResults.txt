@@ -1,3 +1,10 @@
+NMDS Summary
+- used 2 dimensions
+- 10 iterations
+- selected minimum stress 
+- epsilon (i.e., acceptable change in stress) of 1e-12
+- maximum number of iterations = 500
+
 ### Fig 1. Ordination of ecoregions moving through climate space
 ordination
 Minimum stress for given dimensionality:  0.01978888 
