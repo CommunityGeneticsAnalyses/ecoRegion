@@ -70,9 +70,9 @@ dev.off()
 
 jpeg('../results/map.jpeg',width=700,height=700)
 ggmap(map)+
-    geom_point(aes(x=Longitude,y=Latitude),data=x[grepl('CCV',x.f),2:3],col='red',alpha=0.25,size=2)+
-    geom_point(aes(x=Longitude,y=Latitude),data=x[grepl('SD',x.f),2:3],col='black',alpha=0.35,size=2)+
-    geom_point(aes(x=Longitude,y=Latitude),data=x[grepl('UHP',x.f),2:3],col='green',alpha=0.25,size=2)+
+    geom_point(aes(x=Longitude,y=Latitude),data=x[grepl('CCV',x.f),2:3],col='red',alpha=0.25,size=3)+
+    geom_point(aes(x=Longitude,y=Latitude),data=x[grepl('SD',x.f),2:3],col='black',alpha=0.35,size=3)+
+    geom_point(aes(x=Longitude,y=Latitude),data=x[grepl('UHP',x.f),2:3],col='green',alpha=0.25,size=3)+
     labs(x='',y='')+
     theme(line = element_blank(),
           text = element_blank(),
