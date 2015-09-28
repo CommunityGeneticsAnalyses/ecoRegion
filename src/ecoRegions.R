@@ -14,7 +14,7 @@ stay[,5:7] <- apply(stay[,5:7],2,function(x) x/max(x))
 ### min.stay <- nmds.min(ord.stay)
 min.stay <- read.csv('../data/ord_stay.csv')
 vec.stay <- envfit(min.stay,stay[,-1:-4])
-ord.col <- c('blue','green','red')[as.numeric(stay$Ecoregion)]
+ord.col <- c('red','black','green')[as.numeric(stay$Ecoregion)]
 ord.time <- as.numeric(factor(stay$Time))
 ord.time <- c(1,0.45,0.5)[ord.time]
 ord.alpha <- apply(cbind(ord.col,ord.time),1,function(x) alpha(x[1],x[2]))
@@ -40,7 +40,7 @@ gitPush('../results')
 move.all <- read.csv('../data/AllLocations_EnvMove.csv')
 move.all[,2:3] <- apply(move.all[,2:3],2,function(x) (x-mean(x))/sd(x))
 vec.move <- envfit(move.all[,2:3],move.all[,5:7])
-move.col <- c('blue','green','red')[as.numeric(move.all$Ecoregion)]
+move.col <- c('red','black','green')[as.numeric(move.all$Ecoregion)]
 move.time <- as.numeric(factor(move.all$Time))
 move.time <- c(1,0.45,0.5)[move.time]
 move.alpha <- apply(cbind(move.col,move.time),1,function(x) alpha(x[1],x[2]))
