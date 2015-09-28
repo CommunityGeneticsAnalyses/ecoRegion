@@ -1,5 +1,6 @@
 ### Plots of ecoregion patterns for dana 
 source('global.R')
+library(jpeg)
 library(ggmap)
 library(grid)
 
@@ -114,10 +115,10 @@ chPlot(move.all[,2:3],f=f,col=move.alpha,pch=move.pch,xlim=xlim,ylim=ylim,cex=0.
 plot(vec.move,col=grey(0.75))
 axis(side=1,at=seq(xlim[1],xlim[2],length=5),
      labels=round(seq(mean(x[,2])-(xlim[1]*sd(x[,2])),mean(x[,2])+(xlim[2]*sd(x[,2])),
-         length=5),3))
+         length=5),1))
 axis(side=2,at=seq(ylim[1],ylim[2],length=5),
      labels=round(seq(mean(x[,3])-(ylim[1]*sd(x[,3])),mean(x[,3])+(ylim[2]*sd(x[,3])),
-         length=5),3))
+         length=5),1))
 arrows(mu[3,1],mu[3,2],mu[1,1],mu[1,2],code=2,angle=10,length=0.2,lwd=1.25)
 arrows(mu[1,1],mu[1,2],mu[2,1],mu[2,2],code=2,angle=10,length=0.2,lwd=1.25)
 arrows(mu[6,1],mu[6,2],mu[4,1],mu[4,2],code=2,angle=10,length=0.2,lwd=1.25)
