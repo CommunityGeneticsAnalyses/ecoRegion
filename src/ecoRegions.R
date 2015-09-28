@@ -50,73 +50,65 @@ move.pch <- as.numeric(factor(move.all$Time))
 move.pch <- c(19,19,1)[move.pch]
 f <- paste(move.all[,1],move.all[,4])
 
-pdf('../results/EcoReg_FigB.pdf')
-chPlot(move.all[,2:3],f=f,col=move.alpha,pch=move.pch,xlim=c(-1.5,2),ylim=c(-2,1))
-chPlot(move.all[,2:3],f=f,col=move.alpha,pch=move.pch)
-plot(vec.move,col=grey(0.75))
-legend('topright',legend=leg.names,pch=rep(c(19,19,1),3),col=leg.col)
-dev.off()
-gitPush('../results')
-
-
 x.f <- paste(x[,1],x[,4])
 mu <- data.frame(apply(x[,2:3],2,function(x,f) tapply(x,f,mean),f=x.f))
 sd <- apply(x[,2:3],2,function(x,f) tapply(x,f,sd),f=x.f)
 
-map <- get_map(c(lon=mean(x[,2]),lat=mean(x[,3])),
-               zoom=3,source='google',maptype='terrain-background',color='bw')
+map. <- get_map(c(lon=-97,lat=mean(x[,3])+(-3)),
+               zoom=4,source='stamen',maptype='toner-background')
 
+map <- map.
+attr_map <- attr(map,'bb')
+map[map == '#000000'] <- grey(1)
+class(map) <- c('ggmap','raster')
+attr(map,'bb') <- attr_map
+
+jpeg('../results/map_inset.jpeg')
+chPlot(move.all[,2:3],f=f,col=move.alpha,pch=move.pch,xlim=c(-1.5,2),ylim=c(-2,1))
+plot(vec.move,col=grey(0.75))
+dev.off()
+
+jpeg('../results/map.jpeg',width=700,height=700)
 ggmap(map)+
-    geom_point(aes(x=Longitude,y=Latitude),data=x[grepl('CCV',x.f),2:3],col='red',alpha=0.15,size=1)+
+    geom_point(aes(x=Longitude,y=Latitude),data=x[grepl('CCV',x.f),2:3],col='red',alpha=0.25,size=1)+
     geom_point(aes(x=Longitude,y=Latitude),data=x[grepl('SD',x.f),2:3],col='black',alpha=0.35,size=1)+
-    geom_point(aes(x=Longitude,y=Latitude),data=x[grepl('UHP',x.f),2:3],col='green',alpha=0.15,size=1)+
-    geom_point(aes(x=Longitude,y=Latitude),data=mu[1,],col='red',alpha=0.65,size=5)+
-        geom_point(aes(x=Longitude,y=Latitude),data=mu[2,],col='red',alpha=0.35,size=5)+
-            geom_point(aes(x=Longitude,y=Latitude),data=mu[3,],col='red',alpha=1,size=5)+
-    geom_point(aes(x=Longitude,y=Latitude),data=mu[4,],col='black',alpha=0.65,size=5)+
-        geom_point(aes(x=Longitude,y=Latitude),data=mu[5,],col='black',alpha=0.35,size=5)+
-            geom_point(aes(x=Longitude,y=Latitude),data=mu[6,],col='black',alpha=1,size=5)+
-    geom_point(aes(x=Longitude,y=Latitude),data=mu[7,],col='green',alpha=0.65,size=5)+
-        geom_point(aes(x=Longitude,y=Latitude),data=mu[8,],col='green',alpha=0.35,size=5)+
-            geom_point(aes(x=Longitude,y=Latitude),data=mu[9,],col='green',alpha=1,size=5)+
-    geom_line(aes(x=Longitude,y=Latitude),data=mu[c(3,1),],
-              arrow=arrow(angle=10,type='closed',unit(0.15, "inches"),ends='first'))+
-    geom_line(aes(x=Longitude,y=Latitude),data=mu[c(1,2),],
-              arrow=arrow(angle=10,type='closed',unit(0.15, "inches"),ends='last'))+
-    geom_line(aes(x=Longitude,y=Latitude),data=mu[c(6,4),],
-              arrow=arrow(angle=10,type='closed',unit(0.15, "inches"),ends='last'))+
-    geom_line(aes(x=Longitude,y=Latitude),data=mu[c(4,5),],
-              arrow=arrow(angle=10,type='closed',unit(0.15, "inches"),ends='first'))+
-    geom_line(aes(x=Longitude,y=Latitude),data=mu[c(9,7),],
-              arrow=arrow(angle=10,type='closed',unit(0.15, "inches"),ends='first'))+
-    geom_line(aes(x=Longitude,y=Latitude),data=mu[c(7,8),],
-              arrow=arrow(angle=10,type='closed',unit(0.15, "inches"),ends='last'))
+    geom_point(aes(x=Longitude,y=Latitude),data=x[grepl('UHP',x.f),2:3],col='green',alpha=0.25,size=1)+
+    geom_point(aes(x=Longitude,y=Latitude),data=mu[1,],col='red',alpha=0.65,size=1)+
+        geom_point(aes(x=Longitude,y=Latitude),data=mu[2,],col='red',alpha=0.35,size=1)+
+            geom_point(aes(x=Longitude,y=Latitude),data=mu[3,],col='red',alpha=1,size=1)+
+    geom_point(aes(x=Longitude,y=Latitude),data=mu[4,],col='black',alpha=0.65,size=1)+
+        geom_point(aes(x=Longitude,y=Latitude),data=mu[5,],col='black',alpha=0.35,size=1)+
+            geom_point(aes(x=Longitude,y=Latitude),data=mu[6,],col='black',alpha=1,size=1)+
+    geom_point(aes(x=Longitude,y=Latitude),data=mu[7,],col='green',alpha=0.65,size=1)+
+        geom_point(aes(x=Longitude,y=Latitude),data=mu[8,],col='green',alpha=0.35,size=1)+
+            geom_point(aes(x=Longitude,y=Latitude),data=mu[9,],col='green',alpha=1,size=1)
+## +
+##     geom_line(aes(x=Longitude,y=Latitude),data=mu[c(3,1),],
+##               arrow=arrow(angle=10,type='closed',unit(0.15, "inches"),ends='first'))+
+##     geom_line(aes(x=Longitude,y=Latitude),data=mu[c(1,2),],
+##               arrow=arrow(angle=10,type='closed',unit(0.15, "inches"),ends='last'))+
+##     geom_line(aes(x=Longitude,y=Latitude),data=mu[c(6,4),],
+##               arrow=arrow(angle=10,type='closed',unit(0.15, "inches"),ends='last'))+
+##     geom_line(aes(x=Longitude,y=Latitude),data=mu[c(4,5),],
+##               arrow=arrow(angle=10,type='closed',unit(0.15, "inches"),ends='first'))+
+##     geom_line(aes(x=Longitude,y=Latitude),data=mu[c(9,7),],
+##               arrow=arrow(angle=10,type='closed',unit(0.15, "inches"),ends='first'))+
+##     geom_line(aes(x=Longitude,y=Latitude),data=mu[c(7,8),],
+##               arrow=arrow(angle=10,type='closed',unit(0.15, "inches"),ends='last'))+
+    labs(x='Longitude',y='Latitude')
+### legend('topleft',legend=leg.names,pch=rep(c(19,19,1),3),col=leg.col)
+dev.off()
+
+main <- readJPEG('../results/map.jpeg')
+inset <- readJPEG('../results/map_inset.jpeg')
+
+chPlot(move.all[,2:3],f=f,col=move.alpha,pch=move.pch,xlim=c(-1.5,2),ylim=c(-2,1))
+plot(vec.move,col=grey(0.75))
+arrows(move.all[,])
+#rasterImage(inset,0,0,1,1)
+rasterImage(main,0.75,0.15,2,1)
+
+gitPush('../results')
 
 
-### Figure for Gery
-## library(rgl)
-## bio.std <- apply(cbind(stay$BIO.6,stay$BIO.15,stay$BIO.11),
-##                  2,
-##                  function(x) (x - mean(x))/sd(x))
 
-## plot3d(bio.std[,1],bio.std[,2],bio.std[,3],
-##        xlab='',ylab='',zlab='',
-##        type='s',
-##        size=2.5,
-##        col=as.numeric(stay$Ecoregion))
-## decorate3d(xlab='Bio6',ylab='Bio15',zlab='Bio11')
-## rgl.snapshot('~/Desktop/test.png')
-
-
-## ### Transparent Backgrounds
-## png('../results/EcoReg_FigA.png',bg='transparent')
-## chPlot(min.stay,f=f.stay,col=ord.alpha,pch=ord.pch,xlim=c(-1,1.25),ylim=c(-1,0.5))
-## plot(vec.stay,col=grey(0.45))
-## legend('bottomright',legend=leg.names,pch=rep(c(19,19,1),3),col=leg.col)
-## dev.off()
-
-## png('../results/EcoReg_FigB.png',bg='transparent')
-## chPlot(move.all[,2:3],f=f,col=move.alpha,pch=move.pch,xlim=c(-1.5,2),ylim=c(-2,1))
-## plot(vec.move,col=grey(0.45))
-## legend('topright',legend=leg.names,pch=rep(c(19,19,1),3),col=leg.col)
-## dev.off()
