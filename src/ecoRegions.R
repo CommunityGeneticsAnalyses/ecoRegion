@@ -23,6 +23,10 @@ ord.pch <- c(19,19,1)[ord.pch]
 f.stay <- paste(stay[,1],stay[,4])
 leg.names <- unique(paste(stay[,1],stay[,4]))
 leg.names <- leg.names[c(3,1,2,6,4,5,9,7,8)]
+leg.names <- gsub('2010','1990',leg.names)
+leg.names <- gsub('2050','2040',leg.names)
+leg.names <- gsub('2080','2070',leg.names)
+
 leg.col <- unique(ord.alpha)[c(3,1,2,6,4,5,9,7,8)]
 
 pdf('../results/EcoReg_FigA.pdf')
