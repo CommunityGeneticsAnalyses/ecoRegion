@@ -70,18 +70,24 @@ dev.off()
 
 jpeg('../results/map.jpeg',width=700,height=700)
 ggmap(map)+
-    geom_point(aes(x=Longitude,y=Latitude),data=x[grepl('CCV',x.f),2:3],col='red',alpha=0.25,size=1)+
-    geom_point(aes(x=Longitude,y=Latitude),data=x[grepl('SD',x.f),2:3],col='black',alpha=0.35,size=1)+
-    geom_point(aes(x=Longitude,y=Latitude),data=x[grepl('UHP',x.f),2:3],col='green',alpha=0.25,size=1)+
-    geom_point(aes(x=Longitude,y=Latitude),data=mu[1,],col='red',alpha=0.65,size=1)+
-        geom_point(aes(x=Longitude,y=Latitude),data=mu[2,],col='red',alpha=0.35,size=1)+
-            geom_point(aes(x=Longitude,y=Latitude),data=mu[3,],col='red',alpha=1,size=1)+
-    geom_point(aes(x=Longitude,y=Latitude),data=mu[4,],col='black',alpha=0.65,size=1)+
-        geom_point(aes(x=Longitude,y=Latitude),data=mu[5,],col='black',alpha=0.35,size=1)+
-            geom_point(aes(x=Longitude,y=Latitude),data=mu[6,],col='black',alpha=1,size=1)+
-    geom_point(aes(x=Longitude,y=Latitude),data=mu[7,],col='green',alpha=0.65,size=1)+
-        geom_point(aes(x=Longitude,y=Latitude),data=mu[8,],col='green',alpha=0.35,size=1)+
-            geom_point(aes(x=Longitude,y=Latitude),data=mu[9,],col='green',alpha=1,size=1)
+    geom_point(aes(x=Longitude,y=Latitude),data=x[grepl('CCV',x.f),2:3],col='red',alpha=0.25,size=2)+
+    geom_point(aes(x=Longitude,y=Latitude),data=x[grepl('SD',x.f),2:3],col='black',alpha=0.35,size=2)+
+    geom_point(aes(x=Longitude,y=Latitude),data=x[grepl('UHP',x.f),2:3],col='green',alpha=0.25,size=2)+
+    labs(x='',y='')+
+    theme(line = element_blank(),
+          text = element_blank(),
+          line = element_blank(),
+          text = element_blank())
+## +
+##     geom_point(aes(x=Longitude,y=Latitude),data=mu[1,],col='red',alpha=0.65,size=1)+
+##         geom_point(aes(x=Longitude,y=Latitude),data=mu[2,],col='red',alpha=0.35,size=1)+
+##             geom_point(aes(x=Longitude,y=Latitude),data=mu[3,],col='red',alpha=1,size=1)+
+##     geom_point(aes(x=Longitude,y=Latitude),data=mu[4,],col='black',alpha=0.65,size=1)+
+##         geom_point(aes(x=Longitude,y=Latitude),data=mu[5,],col='black',alpha=0.35,size=1)+
+##             geom_point(aes(x=Longitude,y=Latitude),data=mu[6,],col='black',alpha=1,size=1)+
+##     geom_point(aes(x=Longitude,y=Latitude),data=mu[7,],col='green',alpha=0.65,size=1)+
+##         geom_point(aes(x=Longitude,y=Latitude),data=mu[8,],col='green',alpha=0.35,size=1)+
+##             geom_point(aes(x=Longitude,y=Latitude),data=mu[9,],col='green',alpha=1,size=1)
 ## +
 ##     geom_line(aes(x=Longitude,y=Latitude),data=mu[c(3,1),],
 ##               arrow=arrow(angle=10,type='closed',unit(0.15, "inches"),ends='first'))+
@@ -95,20 +101,27 @@ ggmap(map)+
 ##               arrow=arrow(angle=10,type='closed',unit(0.15, "inches"),ends='first'))+
 ##     geom_line(aes(x=Longitude,y=Latitude),data=mu[c(7,8),],
 ##               arrow=arrow(angle=10,type='closed',unit(0.15, "inches"),ends='last'))+
-    labs(x='Longitude',y='Latitude')
 ### legend('topleft',legend=leg.names,pch=rep(c(19,19,1),3),col=leg.col)
 dev.off()
 
 main <- readJPEG('../results/map.jpeg')
 inset <- readJPEG('../results/map_inset.jpeg')
+mu <- apply(move.all[,2:3],2,function(x,f) tapply(x,f,mean),f=f)
+xlim <- c(-1.35,2.5);ylim <- c(-2.35,2)
 
-chPlot(move.all[,2:3],f=f,col=move.alpha,pch=move.pch,xlim=c(-1.5,2),ylim=c(-2,1))
+chPlot(move.all[,2:3],f=f,col=move.alpha,pch=move.pch,xlim=xlim,ylim=ylim,cex=0.75,plot.axes=FALSE)
 plot(vec.move,col=grey(0.75))
-arrows(move.all[,])
-#rasterImage(inset,0,0,1,1)
-rasterImage(main,0.75,0.15,2,1)
+axis(side=1,at=seq(xlim[1],xlim[2],length=10),
+     labels=round(seq(mean(x[,2])-(xlim[1]*sd(x[,2])),mean(x[,2])+(xlim[2]*sd(x[,2])),length=10)))
+axis(side=2,at=seq(ylim[1],ylim[2],length=10),
+     labels=round(seq(mean(x[,3])-(ylim[1]*sd(x[,3])),mean(x[,3])+(ylim[2]*sd(x[,3])),length=10)))
+arrows(mu[3,1],mu[3,2],mu[1,1],mu[1,2],code=2,angle=10,length=0.2,lwd=1.25)
+arrows(mu[1,1],mu[1,2],mu[2,1],mu[2,2],code=2,angle=10,length=0.2,lwd=1.25)
+arrows(mu[6,1],mu[6,2],mu[4,1],mu[4,2],code=2,angle=10,length=0.2,lwd=1.25)
+arrows(mu[4,1],mu[4,2],mu[5,1],mu[5,2],code=2,angle=10,length=0.2,lwd=1.25)
+arrows(mu[9,1],mu[9,2],mu[7,1],mu[7,2],code=2,angle=10,length=0.2,lwd=1.25)
+arrows(mu[7,1],mu[7,2],mu[8,1],mu[8,2],code=2,angle=10,length=0.2,lwd=1.25)
+rasterImage(main,0.75,0.15,2.5,2)
+
 
 gitPush('../results')
-
-
-
