@@ -109,6 +109,7 @@ inset <- readJPEG('../results/map_inset.jpeg')
 mu <- apply(move.all[,2:3],2,function(x,f) tapply(x,f,mean),f=f)
 xlim <- c(-1.35,2.5);ylim <- c(-2.35,2)
 
+pdf('../results/EcoReg_FigB.pdf')
 chPlot(move.all[,2:3],f=f,col=move.alpha,pch=move.pch,xlim=xlim,ylim=ylim,cex=0.75,plot.axes=FALSE)
 plot(vec.move,col=grey(0.75))
 axis(side=1,at=seq(xlim[1],xlim[2],length=10),
@@ -122,6 +123,5 @@ arrows(mu[4,1],mu[4,2],mu[5,1],mu[5,2],code=2,angle=10,length=0.2,lwd=1.25)
 arrows(mu[9,1],mu[9,2],mu[7,1],mu[7,2],code=2,angle=10,length=0.2,lwd=1.25)
 arrows(mu[7,1],mu[7,2],mu[8,1],mu[8,2],code=2,angle=10,length=0.2,lwd=1.25)
 rasterImage(main,0.75,0.15,2.5,2)
-
-
+dev.off()
 gitPush('../results')
