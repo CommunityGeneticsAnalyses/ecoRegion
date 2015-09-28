@@ -39,8 +39,8 @@ dev.off()
 gitPush('../results')
 
 ### Fig 2. Plot of points moving through geographic space based on climate
-move.all <- read.csv('../data/AllLocations_EnvMove.csv')
-#move.all[,2:3] <- apply(move.all[,2:3],2,function(x) (x-mean(x))/sd(x))
+x <- move.all <- read.csv('../data/AllLocations_EnvMove.csv')
+move.all[,2:3] <- apply(move.all[,2:3],2,function(x) (x-mean(x))/sd(x))
 vec.move <- envfit(move.all[,2:3],move.all[,5:7])
 move.col <- c('red','black','green')[as.numeric(move.all$Ecoregion)]
 move.time <- as.numeric(factor(move.all$Time))
@@ -51,7 +51,7 @@ move.pch <- c(19,19,1)[move.pch]
 f <- paste(move.all[,1],move.all[,4])
 
 pdf('../results/EcoReg_FigB.pdf')
-### chPlot(move.all[,2:3],f=f,col=move.alpha,pch=move.pch,xlim=c(-1.5,2),ylim=c(-2,1))
+chPlot(move.all[,2:3],f=f,col=move.alpha,pch=move.pch,xlim=c(-1.5,2),ylim=c(-2,1))
 chPlot(move.all[,2:3],f=f,col=move.alpha,pch=move.pch)
 plot(vec.move,col=grey(0.75))
 legend('topright',legend=leg.names,pch=rep(c(19,19,1),3),col=leg.col)
@@ -59,13 +59,17 @@ dev.off()
 gitPush('../results')
 
 
-mu <- data.frame(apply(x,2,function(x,f) tapply(x,f,mean),f=f))
-sd <- apply(x,2,function(x,f) tapply(x,f,sd),f=f)
+x.f <- paste(x[,1],x[,4])
+mu <- data.frame(apply(x[,2:3],2,function(x,f) tapply(x,f,mean),f=x.f))
+sd <- apply(x[,2:3],2,function(x,f) tapply(x,f,sd),f=x.f)
 
-map <- get_map(c(lon=mean(move.all[,2]),lat=mean(move.all[,3])),
-               zoom=5,source='google',maptype='terrain-background',color='bw')
+map <- get_map(c(lon=mean(x[,2]),lat=mean(x[,3])),
+               zoom=3,source='google',maptype='terrain-background',color='bw')
 
 ggmap(map)+
+    geom_point(aes(x=Longitude,y=Latitude),data=x[grepl('CCV',x.f),2:3],col='red',alpha=0.15,size=1)+
+    geom_point(aes(x=Longitude,y=Latitude),data=x[grepl('SD',x.f),2:3],col='black',alpha=0.35,size=1)+
+    geom_point(aes(x=Longitude,y=Latitude),data=x[grepl('UHP',x.f),2:3],col='green',alpha=0.15,size=1)+
     geom_point(aes(x=Longitude,y=Latitude),data=mu[1,],col='red',alpha=0.65,size=5)+
         geom_point(aes(x=Longitude,y=Latitude),data=mu[2,],col='red',alpha=0.35,size=5)+
             geom_point(aes(x=Longitude,y=Latitude),data=mu[3,],col='red',alpha=1,size=5)+
@@ -76,11 +80,11 @@ ggmap(map)+
         geom_point(aes(x=Longitude,y=Latitude),data=mu[8,],col='green',alpha=0.35,size=5)+
             geom_point(aes(x=Longitude,y=Latitude),data=mu[9,],col='green',alpha=1,size=5)+
     geom_line(aes(x=Longitude,y=Latitude),data=mu[c(3,1),],
-              arrow=arrow(angle=10,type='closed',unit(0.15, "inches")))+
+              arrow=arrow(angle=10,type='closed',unit(0.15, "inches"),ends='first'))+
     geom_line(aes(x=Longitude,y=Latitude),data=mu[c(1,2),],
-              arrow=arrow(angle=10,type='closed',unit(0.15, "inches")),ends='first')+
+              arrow=arrow(angle=10,type='closed',unit(0.15, "inches"),ends='last'))+
     geom_line(aes(x=Longitude,y=Latitude),data=mu[c(6,4),],
-              arrow=arrow(angle=10,type='closed',unit(0.15, "inches")))+
+              arrow=arrow(angle=10,type='closed',unit(0.15, "inches"),ends='last'))+
     geom_line(aes(x=Longitude,y=Latitude),data=mu[c(4,5),],
               arrow=arrow(angle=10,type='closed',unit(0.15, "inches"),ends='first'))+
     geom_line(aes(x=Longitude,y=Latitude),data=mu[c(9,7),],

@@ -1,0 +1,27 @@
+EcoRegion Analysis
+==================
+
+DONE. Along with the vectors, I'd like the time increments changed to 1990,
+2040 and 2070.
+
+Also, can we change the colors so that CCV is red, UHP is green and SD
+is black? That way there's continuity between the colors here and the
+ones used in the map in the supplementary info.
+
+You might consider connecting the points along time for each ecoregion
+like we did in the attached paper in Gehring et al. Molecular Ecology
+(Fig. 2).  
+
+
+I was looking at figure B and was wondering if there was a way to
+place a map of the US behind the NMDS results? Would that make sense
+or do you think it would be too much visually?
+
+
+I think the three vectors in both panels need explanation
+in the fig legend, which seems to be especially important as in panel
+(a) they go in different directions, but in panel (b) they all go in
+the same direction.
+
+
+
