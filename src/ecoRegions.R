@@ -1,8 +1,6 @@
 ### Plots of ecoregion patterns for dana 
 source('global.R')
 
-
-
 ### Fig 1. Ordination of ecoregions moving through climate space
 stay <- read.csv('../data/AllLocations_EnvStay.csv')
 stay <- stay[,-8]
@@ -67,3 +65,17 @@ plot3d(bio.std[,1],bio.std[,2],bio.std[,3],
        col=as.numeric(stay$Ecoregion))
 decorate3d(xlab='Bio6',ylab='Bio15',zlab='Bio11')
 rgl.snapshot('~/Desktop/test.png')
+
+
+### Transparent Backgrounds
+png('../results/EcoReg_FigA.png',bg='transparent')
+chPlot(min.stay,f=f.stay,col=ord.alpha,pch=ord.pch,xlim=c(-1,1.25),ylim=c(-1,0.5))
+plot(vec.stay,col=grey(0.45))
+legend('bottomright',legend=leg.names,pch=rep(c(19,19,1),3),col=leg.col)
+dev.off()
+
+png('../results/EcoReg_FigB.png',bg='transparent')
+chPlot(move.all[,2:3],f=f,col=move.alpha,pch=move.pch,xlim=c(-1.5,2),ylim=c(-2,1))
+plot(vec.move,col=grey(0.45))
+legend('topright',legend=leg.names,pch=rep(c(19,19,1),3),col=leg.col)
+dev.off()
