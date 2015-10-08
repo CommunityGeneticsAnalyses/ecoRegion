@@ -121,6 +121,8 @@ axis(side=1,at=seq(xlim[1],xlim[2],length=5),
 axis(side=2,at=seq(ylim[1],ylim[2],length=5),
      labels=round(seq(mean(x[,3])-(ylim[1]*sd(x[,3])),mean(x[,3])+(ylim[2]*sd(x[,3])),
          length=5),1))
+text(c(-0.8997,1.35722411,-0.06612945),c(0.5084873,-0.7592822,1.0456123),
+     labels=c('CCV','SD','UHP'),col=c(2,1,3))
 chArrow(mu)
 rasterImage(main,0.75,0.15,2.5,2)
 dev.off()
