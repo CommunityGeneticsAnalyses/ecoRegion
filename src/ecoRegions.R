@@ -33,9 +33,11 @@ leg.names <- gsub('2080','2070',leg.names)
 leg.col <- unique(ord.alpha)[c(3,1,2,6,4,5,9,7,8)]
 
 pdf('../results/EcoReg_FigA.pdf')
-chPlot(min.stay,f=f.stay,col=ord.alpha,pch=ord.pch,xlim=c(-1,1.25),ylim=c(-1,0.5))
+sc <- chPlot(min.stay,f=f.stay,col=ord.alpha,pch=ord.pch,xlim=c(-1,1.25),ylim=c(-1,0.5),return.coord=TRUE)
 plot(vec.stay,col=grey(0.75))
-legend('bottomright',legend=leg.names,pch=rep(c(19,19,1),3),col=leg.col)
+text(c(-0.25,-0.25,0.65),c(-0.30,0.25,0.30),labels=c('CCV','SD','UHP'),col=c(2,1,3))
+chArrow(sc)
+#legend('bottomright',legend=leg.names,pch=rep(c(19,19,1),3),col=leg.col)
 dev.off()
 gitPush('../results')
 
@@ -107,7 +109,7 @@ dev.off()
 
 main <- readJPEG('../results/map.jpeg')
 inset <- readJPEG('../results/map_inset.jpeg')
-mu <- apply(move.all[,2:3],2,function(x,f) tapply(x,f,mean),f=f)
+mu <- list(mu=apply(move.all[,2:3],2,function(x,f) tapply(x,f,mean),f=f))
 xlim <- c(-1.35,2.5);ylim <- c(-2.35,2)
 
 pdf('../results/EcoReg_FigB.pdf')
@@ -119,12 +121,7 @@ axis(side=1,at=seq(xlim[1],xlim[2],length=5),
 axis(side=2,at=seq(ylim[1],ylim[2],length=5),
      labels=round(seq(mean(x[,3])-(ylim[1]*sd(x[,3])),mean(x[,3])+(ylim[2]*sd(x[,3])),
          length=5),1))
-arrows(mu[3,1],mu[3,2],mu[1,1],mu[1,2],code=2,angle=10,length=0.2,lwd=1.25)
-arrows(mu[1,1],mu[1,2],mu[2,1],mu[2,2],code=2,angle=10,length=0.2,lwd=1.25)
-arrows(mu[6,1],mu[6,2],mu[4,1],mu[4,2],code=2,angle=10,length=0.2,lwd=1.25)
-arrows(mu[4,1],mu[4,2],mu[5,1],mu[5,2],code=2,angle=10,length=0.2,lwd=1.25)
-arrows(mu[9,1],mu[9,2],mu[7,1],mu[7,2],code=2,angle=10,length=0.2,lwd=1.25)
-arrows(mu[7,1],mu[7,2],mu[8,1],mu[8,2],code=2,angle=10,length=0.2,lwd=1.25)
+chArrow(mu)
 rasterImage(main,0.75,0.15,2.5,2)
 dev.off()
 gitPush('../results')

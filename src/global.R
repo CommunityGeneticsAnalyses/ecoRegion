@@ -30,7 +30,7 @@ getElev <- function(latitude=52.4822,longitude=-1.8946){
     as.numeric(xmlValue(heightNode))
 }
 
-chPlot <- function(x,f,col,pch,se=FALSE,xlim=c(-1,1),ylim=c(-1,1),cex=1,plot.axes=TRUE){
+chPlot <- function(x,f,col,pch,se=FALSE,xlim=c(-1,1),ylim=c(-1,1),cex=1,plot.axes=TRUE,return.coord=FALSE){
     col <- tapply(col,f,function(x) x[1])
     pch <- tapply(pch,f,function(x) x[1])
     mu <- apply(x,2,function(x,f) tapply(x,f,mean),f=f)
@@ -53,6 +53,20 @@ chPlot <- function(x,f,col,pch,se=FALSE,xlim=c(-1,1),ylim=c(-1,1),cex=1,plot.axe
     for (i in 1:nrow(mu)){
         lines(c(bar.up[i,1],bar.lo[i,1]),rep(mu[i,2],2),col=col[i])
         lines(rep(mu[i,1],2),c(bar.up[i,2],bar.lo[i,2]),col=col[i])
+    }
+    if (return.coord){return(list(mu,bars))}
+}
+
+chArrow <- function(x){
+    n <- do.call(rbind,strsplit(rownames(x[[1]]),split=' '))
+    for (i in 1:length(unique(n[,1]))){
+        y <- x[[1]][n[,1] == unique(n[,1])[i],]
+        n. <- as.numeric(do.call(rbind,strsplit(rownames(y),split=' '))[,2])
+        y <- y[order(n.),]
+        for (j in 1:(nrow(y) - 1)){
+            arrows(y[j,1],y[j,2],y[(j+1),1],y[(j+1),2],
+                   code=2,angle=10,length=0.1,lwd=1.25,col='darkgrey')
+        }
     }
 }
 
