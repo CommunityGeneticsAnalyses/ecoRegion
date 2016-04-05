@@ -15,7 +15,8 @@ stay[,5:7] <- apply(stay[,5:7],2,function(x) x/max(x))
                                         #ordinate
 ### ord.stay <- nmds(dist(stay[,5:7]),2,2)
 ### min.stay <- nmds.min(ord.stay)
-min.stay <- read.csv('../data/ord_stay.csv')
+### min.stay <- read.csv('../data/ord_stay.csv')
+min.stay <- princomp(stay[,5:7])$scores
 vec.stay <- envfit(min.stay,stay[,-1:-4])
 ord.col <- c('red','black','green')[as.numeric(stay$Ecoregion)]
 ord.time <- as.numeric(factor(stay$Time))
@@ -33,7 +34,7 @@ leg.names <- gsub('2080','2070',leg.names)
 leg.col <- unique(ord.alpha)[c(3,1,2,6,4,5,9,7,8)]
 
 pdf('../results/EcoReg_FigA.pdf')
-sc <- chPlot(min.stay,f=f.stay,col=ord.alpha,pch=ord.pch,xlim=c(-1,1.25),ylim=c(-1,0.5),return.coord=TRUE)
+sc <- chPlot(min.stay,f=f.stay,col=ord.alpha,pch=ord.pch,xlim=c(-1,1.25),ylim=c(-1,0.5),return.coord=TRUE,se=TRUE)
 plot(vec.stay,col=grey(0.75))
 text(c(-0.25,-0.25,0.65),c(-0.30,0.25,0.30),labels=c('CCV','SD','UHP'),col=c(2,1,3))
 chArrow(sc)
