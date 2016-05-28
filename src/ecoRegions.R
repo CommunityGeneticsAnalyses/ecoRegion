@@ -67,12 +67,12 @@ map[map == '#000000'] <- grey(1)
 class(map) <- c('ggmap','raster')
 attr(map,'bb') <- attr_map
 
-jpeg('../results/map_inset.jpeg')
+jpeg('../results/map_inset.jpeg',quality=100)
 chPlot(move.all[,2:3],f=f,col=move.alpha,pch=move.pch,xlim=c(-1.5,2),ylim=c(-2,1))
 plot(vec.move,col=grey(0.75))
 dev.off()
 
-jpeg('../results/map.jpeg',width=700,height=700)
+jpeg('../results/map.jpeg',width=700,height=700,quality=100)
 ggmap(map)+
     geom_point(aes(x=Longitude,y=Latitude),data=x[grepl('CCV',x.f),2:3],col='red',alpha=0.25,size=3)+
     geom_point(aes(x=Longitude,y=Latitude),data=x[grepl('SD',x.f),2:3],col='black',alpha=0.35,size=3)+
@@ -113,7 +113,7 @@ inset <- readJPEG('../results/map_inset.jpeg')
 mu <- list(mu=apply(move.all[,2:3],2,function(x,f) tapply(x,f,mean),f=f))
 xlim <- c(-1.35,2.5);ylim <- c(-2.35,2)
 
-pdf('../results/EcoReg_FigB.pdf')
+pdf('../results/EcoReg_FigB.pdf',quality=100)
 chPlot(move.all[,2:3],f=f,col=move.alpha,pch=move.pch,xlim=xlim,ylim=ylim,cex=0.75,plot.axes=FALSE)
 plot(vec.move,col=grey(0.75))
 axis(side=1,at=seq(xlim[1],xlim[2],length=5),
