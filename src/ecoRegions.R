@@ -72,7 +72,7 @@ chPlot(move.all[,2:3],f=f,col=move.alpha,pch=move.pch,xlim=c(-1.5,2),ylim=c(-2,1
 plot(vec.move,col=grey(0.75))
 dev.off()
 
-jpeg('../results/map.jpeg',quality=100)
+jpeg('../results/map.jpeg',width=2400,height=2400,quality=100)
 ggmap(map)+
     geom_point(aes(x=Longitude,y=Latitude),data=x[grepl('CCV',x.f),2:3],col='red',alpha=0.25,size=3)+
     geom_point(aes(x=Longitude,y=Latitude),data=x[grepl('SD',x.f),2:3],col='black',alpha=0.35,size=3)+
