@@ -40,7 +40,7 @@ text(c(-0.25,-0.25,0.65),c(-0.30,0.25,0.30),labels=c('CCV','SD','UHP'),col=c(2,1
 chArrow(sc)
 #legend('bottomright',legend=leg.names,pch=rep(c(19,19,1),3),col=leg.col)
 dev.off()
-gitPush('../results')
+#gitPush('../results')
 
 ### Fig 2. Plot of points moving through geographic space based on climate
 x <- move.all <- read.csv('../data/AllLocations_EnvMove.csv')
@@ -53,11 +53,9 @@ move.alpha <- apply(cbind(move.col,move.time),1,function(x) alpha(x[1],x[2]))
 move.pch <- as.numeric(factor(move.all$Time))
 move.pch <- c(19,19,1)[move.pch]
 f <- paste(move.all[,1],move.all[,4])
-
 x.f <- paste(x[,1],x[,4])
 mu <- data.frame(apply(x[,2:3],2,function(x,f) tapply(x,f,mean),f=x.f))
 sd <- apply(x[,2:3],2,function(x,f) tapply(x,f,sd),f=x.f)
-
 map. <- get_map(c(lon=-97,lat=mean(x[,3])+(-3)),
                zoom=4,source='stamen',maptype='toner-background')
 
@@ -67,7 +65,7 @@ map[map == '#000000'] <- grey(1)
 class(map) <- c('ggmap','raster')
 attr(map,'bb') <- attr_map
 
-jpeg('../results/map_inset.jpeg',quality=100)
+jpeg('../results/map_inset.jpeg',width=2400,height=2400,,quality=100)
 chPlot(move.all[,2:3],f=f,col=move.alpha,pch=move.pch,xlim=c(-1.5,2),ylim=c(-2,1))
 plot(vec.move,col=grey(0.75))
 dev.off()
@@ -89,7 +87,7 @@ inset <- readJPEG('../results/map_inset.jpeg')
 mu <- list(mu=apply(move.all[,2:3],2,function(x,f) tapply(x,f,mean),f=f))
 xlim <- c(-1.35,2.5);ylim <- c(-2.35,2)
 
-pdf('../results/EcoReg_FigB.pdf',quality=100)
+pdf('../results/EcoReg_FigB.pdf')
 chPlot(move.all[,2:3],f=f,col=move.alpha,pch=move.pch,xlim=xlim,ylim=ylim,cex=0.75,plot.axes=FALSE)
 plot(vec.move,col=grey(0.75))
 axis(side=1,at=seq(xlim[1],xlim[2],length=5),
@@ -103,4 +101,4 @@ text(c(-0.8997,1.35722411,-0.06612945),c(0.5084873,-0.7592822,1.0456123),
 chArrow(mu)
 rasterImage(main,0.75,0.15,2.5,2)
 dev.off()
-gitPush('../results')
+#gitPush('../results')

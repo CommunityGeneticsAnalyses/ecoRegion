@@ -30,7 +30,7 @@ getElev <- function(latitude=52.4822,longitude=-1.8946){
     as.numeric(xmlValue(heightNode))
 }
 
-chPlot <- function(x,f,col,pch,se=FALSE,xlim=c(-1,1),ylim=c(-1,1),cex=1,plot.axes=TRUE,return.coord=FALSE){
+chPlot <- function(x,f,col,pch,se=FALSE,xlim=c(-1,1),ylim=c(-1,1),cex=1,plot.axes=TRUE,return.coord=FALSE,xlab='Axis 1',ylab='Axis 2'){
     col <- tapply(col,f,function(x) x[1])
     pch <- tapply(pch,f,function(x) x[1])
     mu <- apply(x,2,function(x,f) tapply(x,f,mean),f=f)
@@ -45,9 +45,9 @@ chPlot <- function(x,f,col,pch,se=FALSE,xlim=c(-1,1),ylim=c(-1,1),cex=1,plot.axe
     bar.lo <- mu - bars
 ### make the plot
     if (plot.axes){
-        plot(mu,col=col,pch=pch,xlim=xlim,ylim=ylim,cex=cex)
+        plot(mu,col=col,pch=pch,xlim=xlim,ylim=ylim,cex=cex,xlab=xlab,ylab=ylab)
     }else{
-        plot(mu,col=col,pch=pch,xlim=xlim,ylim=ylim,cex=cex,xaxt='n',yaxt='n')
+        plot(mu,col=col,pch=pch,xlim=xlim,ylim=ylim,cex=cex,xaxt='n',yaxt='n',xlab=xlab,ylab=ylab)
     }
 
     for (i in 1:nrow(mu)){
