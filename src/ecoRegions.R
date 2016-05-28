@@ -72,7 +72,7 @@ chPlot(move.all[,2:3],f=f,col=move.alpha,pch=move.pch,xlim=c(-1.5,2),ylim=c(-2,1
 plot(vec.move,col=grey(0.75))
 dev.off()
 
-jpeg('../results/map.jpeg',width=700,height=700,quality=100)
+jpeg('../results/map.jpeg',quality=100)
 ggmap(map)+
     geom_point(aes(x=Longitude,y=Latitude),data=x[grepl('CCV',x.f),2:3],col='red',alpha=0.25,size=3)+
     geom_point(aes(x=Longitude,y=Latitude),data=x[grepl('SD',x.f),2:3],col='black',alpha=0.35,size=3)+
@@ -82,30 +82,6 @@ ggmap(map)+
           text = element_blank(),
           line = element_blank(),
           text = element_blank())
-## +
-##     geom_point(aes(x=Longitude,y=Latitude),data=mu[1,],col='red',alpha=0.65,size=1)+
-##         geom_point(aes(x=Longitude,y=Latitude),data=mu[2,],col='red',alpha=0.35,size=1)+
-##             geom_point(aes(x=Longitude,y=Latitude),data=mu[3,],col='red',alpha=1,size=1)+
-##     geom_point(aes(x=Longitude,y=Latitude),data=mu[4,],col='black',alpha=0.65,size=1)+
-##         geom_point(aes(x=Longitude,y=Latitude),data=mu[5,],col='black',alpha=0.35,size=1)+
-##             geom_point(aes(x=Longitude,y=Latitude),data=mu[6,],col='black',alpha=1,size=1)+
-##     geom_point(aes(x=Longitude,y=Latitude),data=mu[7,],col='green',alpha=0.65,size=1)+
-##         geom_point(aes(x=Longitude,y=Latitude),data=mu[8,],col='green',alpha=0.35,size=1)+
-##             geom_point(aes(x=Longitude,y=Latitude),data=mu[9,],col='green',alpha=1,size=1)
-## +
-##     geom_line(aes(x=Longitude,y=Latitude),data=mu[c(3,1),],
-##               arrow=arrow(angle=10,type='closed',unit(0.15, "inches"),ends='first'))+
-##     geom_line(aes(x=Longitude,y=Latitude),data=mu[c(1,2),],
-##               arrow=arrow(angle=10,type='closed',unit(0.15, "inches"),ends='last'))+
-##     geom_line(aes(x=Longitude,y=Latitude),data=mu[c(6,4),],
-##               arrow=arrow(angle=10,type='closed',unit(0.15, "inches"),ends='last'))+
-##     geom_line(aes(x=Longitude,y=Latitude),data=mu[c(4,5),],
-##               arrow=arrow(angle=10,type='closed',unit(0.15, "inches"),ends='first'))+
-##     geom_line(aes(x=Longitude,y=Latitude),data=mu[c(9,7),],
-##               arrow=arrow(angle=10,type='closed',unit(0.15, "inches"),ends='first'))+
-##     geom_line(aes(x=Longitude,y=Latitude),data=mu[c(7,8),],
-##               arrow=arrow(angle=10,type='closed',unit(0.15, "inches"),ends='last'))+
-### legend('topleft',legend=leg.names,pch=rep(c(19,19,1),3),col=leg.col)
 dev.off()
 
 main <- readJPEG('../results/map.jpeg')
