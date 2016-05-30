@@ -2,7 +2,7 @@
 source('global.R')
 library(jpeg)
 library(ggmap)
-library(grid)
+#library(grid)
 
 ### Fig 1. Ordination of ecoregions moving through climate space
 stay <- read.csv('../data/AllLocations_EnvStay.csv')
@@ -40,7 +40,7 @@ text(c(-0.25,-0.25,0.65),c(-0.30,0.25,0.30),labels=c('CCV','SD','UHP'),col=c(2,1
 chArrow(sc)
 #legend('bottomright',legend=leg.names,pch=rep(c(19,19,1),3),col=leg.col)
 dev.off()
-#gitPush('../results')
+gitPush('../results')
 
 ### Fig 2. Plot of points moving through geographic space based on climate
 x <- move.all <- read.csv('../data/AllLocations_EnvMove.csv')
@@ -88,7 +88,7 @@ mu <- list(mu=apply(move.all[,2:3],2,function(x,f) tapply(x,f,mean),f=f))
 xlim <- c(-1.35,2.5);ylim <- c(-2.35,2)
 
 pdf('../results/EcoReg_FigB.pdf')
-chPlot(move.all[,2:3],f=f,col=move.alpha,pch=move.pch,xlim=xlim,ylim=ylim,cex=0.75,plot.axes=FALSE)
+chPlot(move.all[,2:3],f=f,col=move.alpha,pch=move.pch,xlim=xlim,ylim=ylim,cex=0.75,plot.axes=FALSE,xlab='Longitude (decimal)',ylab='Latitude (decimal)')
 plot(vec.move,col=grey(0.75))
 axis(side=1,at=seq(xlim[1],xlim[2],length=5),
      labels=round(seq(mean(x[,2])-(xlim[1]*sd(x[,2])),mean(x[,2])+(xlim[2]*sd(x[,2])),
@@ -101,4 +101,4 @@ text(c(-0.8997,1.35722411,-0.06612945),c(0.5084873,-0.7592822,1.0456123),
 chArrow(mu)
 rasterImage(main,0.75,0.15,2.5,2)
 dev.off()
-#gitPush('../results')
+gitPush('../results')
