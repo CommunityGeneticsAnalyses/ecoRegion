@@ -6,7 +6,7 @@ library(ggmap)
 stay <- read.csv('../data/AllLocations_EnvStay.csv')
 stay <- stay[,-8]
 stay$Time <- as.character(stay$Time)
-stay$Time[as.character(stay$Time) == "Current"] <- '2010'
+stay$Time[as.character(stay$Time) == "Current"] <- 'Current'
                                         #relativize climate variables
 stay[,5:7] <- apply(stay[,5:7],2,function(x) x/max(x))
                                         #ordinate
@@ -31,7 +31,7 @@ leg.col <- unique(ord.alpha)[c(3,1,2,6,4,5,9,7,8)]
 
 x <- move.all <- read.csv('../data/AllLocations_EnvMove.csv')
 move.all[,2:3] <- apply(move.all[,2:3],2,function(x) (x-mean(x))/sd(x))
-move.all$Time <- gsub('Current','2010',move.all$Time)
+#move.all$Time <- gsub('Current','2010',move.all$Time)
 vec.move <- envfit(move.all[,2:3],move.all[,5:7])
 move.col <- c('red','black','green')[as.numeric(move.all$Ecoregion)]
 move.time <- as.numeric(factor(move.all$Time))
