@@ -3,7 +3,6 @@ source('global.R')
 library(jpeg)
 library(ggmap)
 
-### Fig 1. Ordination of ecoregions moving through climate space
 stay <- read.csv('../data/AllLocations_EnvStay.csv')
 stay <- stay[,-8]
 stay$Time <- as.character(stay$Time)
@@ -30,17 +29,6 @@ leg.names <- gsub('2050','2040',leg.names)
 leg.names <- gsub('2080','2070',leg.names)
 leg.col <- unique(ord.alpha)[c(3,1,2,6,4,5,9,7,8)]
 
-
-pdf('../results/EcoReg_FigA.pdf')
-sc <- chPlot(min.stay,f=f.stay,col=ord.alpha,pch=ord.pch,xlim=c(-1,1.25),ylim=c(-1,0.5),return.coord=TRUE,se=TRUE)
-plot(vec.stay,col=grey(0.75))
-text(c(-0.25,-0.25,0.65),c(-0.30,0.25,0.30),labels=c('CCV','SD','UHP'),col=c(2,1,3))
-chArrow(sc)
-text(sc[[1]][grepl('UHP',rownames(sc[[1]])),1:2],labels=substr(rownames(sc[[1]][grepl('UHP',rownames(sc[[1]])),]),5,8),pos=3,col='darkgrey')
-#legend('bottomright',legend=leg.names,pch=rep(c(19,19,1),3),col=leg.col)
-dev.off()
-
-### Fig 2. Plot of points moving through geographic space based on climate
 x <- move.all <- read.csv('../data/AllLocations_EnvMove.csv')
 move.all[,2:3] <- apply(move.all[,2:3],2,function(x) (x-mean(x))/sd(x))
 move.all$Time <- gsub('Current','2010',move.all$Time)
@@ -87,8 +75,19 @@ inset <- readJPEG('../results/map_inset.jpeg')
 mu <- list(mu=apply(move.all[,2:3],2,function(x,f) tapply(x,f,mean),f=f))
 xlim <- c(-1.35,2.5);ylim <- c(-2.35,2)
 
+### Fig 1. Ordination of ecoregions moving through climate space
+pdf('../results/EcoReg_FigA.pdf')
+sc <- chPlot(min.stay,f=f.stay,col=ord.alpha,pch=ord.pch,xlim=c(-1,1.25),ylim=c(-1,0.5),return.coord=TRUE,se=FALSE)
+plot(vec.stay,col=grey(0.75))
+text(c(-0.25,-0.25,0.65),c(-0.30,0.25,0.30),labels=c('CCV','SD','UHP'),col=c(2,1,3))
+chArrow(sc)
+text(sc[[1]][grepl('UHP',rownames(sc[[1]])),1:2],labels=substr(rownames(sc[[1]][grepl('UHP',rownames(sc[[1]])),]),5,8),pos=3,col='darkgrey')
+#legend('bottomright',legend=leg.names,pch=rep(c(19,19,1),3),col=leg.col)
+dev.off()
+
+### Fig 2. Plot of points moving through geographic space based on climate
 pdf('../results/EcoReg_FigB.pdf')
-sc.m <- chPlot(move.all[,2:3],f=f,col=move.alpha,pch=move.pch,xlim=xlim,ylim=ylim,cex=0.75,plot.axes=FALSE,xlab='Longitude (decimal)',ylab='Latitude (decimal)',return.coord=TRUE)
+sc.m <- chPlot(move.all[,2:3],f=f,col=move.alpha,pch=move.pch,xlim=xlim,ylim=ylim,cex=0.75,plot.axes=FALSE,xlab='Longitude (decimal)',ylab='Latitude (decimal)',return.coord=TRUE,se=FALSE)
 plot(vec.move,col=grey(0.75))
 axis(side=1,at=seq(xlim[1],xlim[2],length=5),
      labels=round(seq(mean(x[,2])-(xlim[1]*sd(x[,2])),mean(x[,2])+(xlim[2]*sd(x[,2])),
